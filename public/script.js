@@ -61,7 +61,7 @@ async function downloadVideo() {
                         <div class="relative w-full sm:w-40 flex-shrink-0">
                             <img src="${res.data.cover_link}" class="w-full h-56 sm:h-40 object-cover rounded-xl shadow-lg border border-gray-800">
                             <div class="absolute bottom-2 right-2 bg-blue-600/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-white uppercase tracking-wider">
-                                Preview
+                                Thumb
                             </div>
                         </div>
 
