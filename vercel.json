@@ -2,8 +2,8 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/download"
+      "source": "/api/download",
+      "destination": "server.js"
     },
     {
       "source": "/(.*)",
@@ -12,7 +12,7 @@
   ],
   "functions": {
     "server.js": {
-      "runtime": "vercel-node@latest"
+      "runtime": "nodejs20.x"
     }
   }
 }
