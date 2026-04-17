@@ -26,7 +26,7 @@ async function downloadVideo() {
         if (res.status && res.data) {
             // Format Nama File: ssstik.io_@username_ID.mp4
             const cleanNick = (res.data.author_nickname || 'user').replace(/\s+/g, '');
-            const fileName = `wsynaptik.io_@${cleanNick}_${res.data.itemId}.mp4`;
+            const fileName = `ssstik.io_@${cleanNick}_${res.data.itemId}.mp4`;
 
             // Render Tampilan Premium ala Web Downloader Profesional
             contentDiv.innerHTML = `
