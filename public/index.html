@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
     <style>
         body { 
             font-family: 'Inter', sans-serif;
@@ -39,6 +41,16 @@
         .btn-gradient:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.5);
+        }
+        /* Style Tambahan untuk Social Icons */
+        .social-icons a {
+            color: #4b5563;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #3b82f6;
+            transform: translateY(-3px);
         }
     </style>
 </head>
@@ -106,9 +118,26 @@
             <div id="content" class="hidden"></div>
         </div>
 
-        <p id="footerCopyright" class="mt-8 text-center text-[10px] text-gray-600 uppercase tracking-[0.2em]">
-            &copy; 2026 WsynapTik &bull; Downloader
-        </p>
+        <footer class="mt-8 pt-6 border-t border-white/5">
+            <p id="footerCopyright" class="text-center text-[10px] text-gray-600 uppercase tracking-[0.2em] mb-4">
+                &copy; 2026 WsynapTik &bull; Downloader
+            </p>
+            
+            <div class="social-icons flex gap-6 justify-center">
+                <a href="https://github.com/HidzzY" target="_blank" rel="noopener noreferrer" aria-label="Github">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://t.me/hidzex3c" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://tiktok.com/@w.hizz" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="mailto:wahidrahmannn1324@gmail.com" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </footer>
     </div>
 
     <script src="script.js"></script>
