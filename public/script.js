@@ -1,18 +1,22 @@
 async function downloadVideo() {
     const url = document.getElementById('urlInput').value;
-    const resultDiv = document.getElementById('result');
+    const inputSection = document.getElementById('inputSection');
+    const resultSection = document.getElementById('resultSection');
     const contentDiv = document.getElementById('content');
     const loading = document.getElementById('loading');
     const btn = document.getElementById('btnDownload');
 
-    if (!url) return alert("Masukkan URL!");
+    if (!url) return alert("Tempelkan link TikTok dulu!");
 
-    // UI Feedback
-    resultDiv.classList.remove('hidden');
+    // PINDAH KE HALAMAN 2 (Result Page)
+    inputSection.classList.add('hidden');
+    resultSection.classList.remove('hidden');
+    
+    // UI Loading State
     loading.classList.remove('hidden');
     contentDiv.classList.add('hidden');
+    contentDiv.innerHTML = ''; // Bersihkan konten lama
     btn.disabled = true;
-    btn.innerText = "Loading...";
 
     try {
         const response = await fetch('/api/download', {
@@ -24,11 +28,10 @@ async function downloadVideo() {
         const res = await response.json();
 
         if (res.status && res.data) {
-            // Format Nama File: ssstik.io_@username_ID.mp4
             const cleanNick = (res.data.author_nickname || 'user').replace(/\s+/g, '');
             const fileName = `ssstik.io_@${cleanNick}_${res.data.itemId}.mp4`;
 
-            // Render Tampilan Premium ala Web Downloader Profesional
+            // Render Tampilan Premium di Halaman 2
             contentDiv.innerHTML = `
                 <div class="animate-fade-in space-y-6">
                     <div class="flex flex-col sm:flex-row gap-5 p-5 bg-[#1e1e1e] rounded-2xl border border-white/5 shadow-xl">
@@ -72,7 +75,7 @@ async function downloadVideo() {
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                             </svg>
-                            Download Tanpa Watermark
+                            Download Video (No WM)
                         </a>
 
                         <div class="grid grid-cols-2 gap-3">
@@ -89,8 +92,8 @@ async function downloadVideo() {
                         </div>
                     </div>
 
-                    <button onclick="window.location.reload()" class="mt-4 text-gray-500 hover:text-white text-sm font-medium transition-all underline decoration-gray-700 underline-offset-4">
-                        ← Download Video Lain
+                    <button onclick="backToHome()" class="w-full mt-4 text-gray-500 hover:text-white text-sm font-medium transition-all py-2 border border-dashed border-white/5 rounded-xl">
+                        Cari Video Lain
                     </button>
                 </div>
             `;
@@ -98,14 +101,21 @@ async function downloadVideo() {
             loading.classList.add('hidden');
             contentDiv.classList.remove('hidden');
         } else {
-            alert("Gagal mendapatkan data. Pastikan link benar.");
-            resultDiv.classList.add('hidden');
+            alert("Gagal mendapatkan data. Link tidak valid.");
+            backToHome();
         }
     } catch (err) {
         alert("Terjadi kesalahan server.");
-        resultDiv.classList.add('hidden');
+        backToHome();
     } finally {
         btn.disabled = false;
-        btn.innerText = "Download Sekarang";
+        btn.innerText = "Mulai Download";
     }
+}
+
+// FUNGSI UNTUK KEMBALI KE HALAMAN INPUT
+function backToHome() {
+    document.getElementById('inputSection').classList.remove('hidden');
+    document.getElementById('resultSection').classList.add('hidden');
+    document.getElementById('urlInput').value = ''; // Reset input link
 }
