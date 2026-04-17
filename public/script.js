@@ -1,13 +1,10 @@
-// Fungsi untuk memicu notifikasi error yang modern
 function showError(message) {
-    const inputWrapper = document.querySelector('.group'); // Wrapper input
+    const inputWrapper = document.querySelector('.group');
     const urlInput = document.getElementById('urlInput');
     
-    // Tambahkan efek shake (kita buat di CSS nanti)
     inputWrapper.classList.add('animate-shake');
     urlInput.classList.add('border-red-500/50', 'bg-red-500/5');
     
-    // Buat elemen toast secara dinamis
     const toast = document.createElement('div');
     toast.className = 'absolute -top-12 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-xl animate-fade-in z-50 whitespace-nowrap';
     toast.innerHTML = `<div class="flex items-center gap-2">
@@ -17,7 +14,6 @@ function showError(message) {
     
     inputWrapper.appendChild(toast);
 
-    // Hapus efek setelah 3 detik
     setTimeout(() => {
         inputWrapper.classList.remove('animate-shake');
         urlInput.classList.remove('border-red-500/50', 'bg-red-500/5');
@@ -33,9 +29,8 @@ async function downloadVideo() {
     const loading = document.getElementById('loading');
     const btn = document.getElementById('btnDownload');
 
-    // MENGGANTI ALERT DENGAN CUSTOM ERROR
     if (!url) {
-        showError("Waduh, tempel dulu link videonya ya!");
+        showError("tempel dulu tautan nya!");
         return;
     }
 
