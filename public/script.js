@@ -6,16 +6,14 @@ async function downloadVideo() {
     const loading = document.getElementById('loading');
     const btn = document.getElementById('btnDownload');
 
-    if (!url) return alert("Tempelkan link TikTok dulu!");
+    if (!url) return alert("tempel tautan video tiktok nyaa!");
 
-    // PINDAH KE HALAMAN 2 (Result Page)
     inputSection.classList.add('hidden');
     resultSection.classList.remove('hidden');
     
-    // UI Loading State
     loading.classList.remove('hidden');
     contentDiv.classList.add('hidden');
-    contentDiv.innerHTML = ''; // Bersihkan konten lama
+    contentDiv.innerHTML = '';
     btn.disabled = true;
 
     try {
@@ -31,7 +29,6 @@ async function downloadVideo() {
             const cleanNick = (res.data.author_nickname || 'user').replace(/\s+/g, '');
             const fileName = `ssstik.io_@${cleanNick}_${res.data.itemId}.mp4`;
 
-            // Render Tampilan Premium di Halaman 2
             contentDiv.innerHTML = `
                 <div class="animate-fade-in space-y-6">
                     <div class="flex flex-col sm:flex-row gap-5 p-5 bg-[#1e1e1e] rounded-2xl border border-white/5 shadow-xl">
@@ -109,13 +106,12 @@ async function downloadVideo() {
         backToHome();
     } finally {
         btn.disabled = false;
-        btn.innerText = "Mulai Download";
+        btn.innerText = "Gas Download";
     }
 }
 
-// FUNGSI UNTUK KEMBALI KE HALAMAN INPUT
 function backToHome() {
     document.getElementById('inputSection').classList.remove('hidden');
     document.getElementById('resultSection').classList.add('hidden');
-    document.getElementById('urlInput').value = ''; // Reset input link
+    document.getElementById('urlInput').value = ''; 
 }
