@@ -25,3 +25,12 @@
 input::placeholder {
     color: #4b5563;
 }
+
+.bg-ssstik {
+    background-color: #2ecc71;
+    transition: all 0.3s ease;
+}
+.bg-ssstik:hover {
+    background-color: #27ae60;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+}
