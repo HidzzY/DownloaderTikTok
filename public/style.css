@@ -1,36 +1,50 @@
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-fade-in {
-    animation: fadeIn 0.5s ease forwards;
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
 
-/* Custom scrollbar untuk tampilan dark mode */
+.animate-fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-shake {
+    animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Custom scrollbar mewah */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 ::-webkit-scrollbar-track {
-    background: #121212;
+    background: #0f0f0f;
 }
 ::-webkit-scrollbar-thumb {
-    background: #333;
+    background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
     border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #444;
+    background: #3b82f6;
 }
 
 input::placeholder {
     color: #4b5563;
+    font-size: 0.9rem;
 }
 
-.bg-ssstik {
-    background-color: #2ecc71;
-    transition: all 0.3s ease;
+/* Glassmorphism tambahan */
+.glass-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
-.bg-ssstik:hover {
-    background-color: #27ae60;
-    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+
+/* Hover effect pada input */
+#urlInput:focus {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
 }
