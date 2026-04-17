@@ -1,3 +1,30 @@
+// Fungsi untuk memicu notifikasi error yang modern
+function showError(message) {
+    const inputWrapper = document.querySelector('.group'); // Wrapper input
+    const urlInput = document.getElementById('urlInput');
+    
+    // Tambahkan efek shake (kita buat di CSS nanti)
+    inputWrapper.classList.add('animate-shake');
+    urlInput.classList.add('border-red-500/50', 'bg-red-500/5');
+    
+    // Buat elemen toast secara dinamis
+    const toast = document.createElement('div');
+    toast.className = 'absolute -top-12 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-xl animate-fade-in z-50 whitespace-nowrap';
+    toast.innerHTML = `<div class="flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        ${message}
+    </div>`;
+    
+    inputWrapper.appendChild(toast);
+
+    // Hapus efek setelah 3 detik
+    setTimeout(() => {
+        inputWrapper.classList.remove('animate-shake');
+        urlInput.classList.remove('border-red-500/50', 'bg-red-500/5');
+        toast.remove();
+    }, 3000);
+}
+
 async function downloadVideo() {
     const url = document.getElementById('urlInput').value;
     const inputSection = document.getElementById('inputSection');
@@ -6,7 +33,11 @@ async function downloadVideo() {
     const loading = document.getElementById('loading');
     const btn = document.getElementById('btnDownload');
 
-    if (!url) return alert("tempel tautan video tiktok nyaa!");
+    // MENGGANTI ALERT DENGAN CUSTOM ERROR
+    if (!url) {
+        showError("Waduh, tempel dulu link videonya ya!");
+        return;
+    }
 
     inputSection.classList.add('hidden');
     resultSection.classList.remove('hidden');
@@ -27,14 +58,14 @@ async function downloadVideo() {
 
         if (res.status && res.data) {
             const cleanNick = (res.data.author_nickname || 'user').replace(/\s+/g, '');
-            const fileName = `ssstik.io_@${cleanNick}_${res.data.itemId}.mp4`;
+            const fileName = `WsynapTik_@${cleanNick}_${res.data.itemId}.mp4`;
 
             contentDiv.innerHTML = `
                 <div class="animate-fade-in space-y-6">
-                    <div class="flex flex-col sm:flex-row gap-5 p-5 bg-[#1e1e1e] rounded-2xl border border-white/5 shadow-xl">
+                    <div class="flex flex-col sm:flex-row gap-5 p-5 bg-[#1e1e1e]/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-2xl">
                         <div class="relative w-full sm:w-40 flex-shrink-0">
                             <img src="${res.data.cover_link}" class="w-full h-56 sm:h-40 object-cover rounded-xl shadow-lg border border-gray-800">
-                            <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-white uppercase tracking-wider">
+                            <div class="absolute bottom-2 right-2 bg-blue-600/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-white uppercase tracking-wider">
                                 Preview
                             </div>
                         </div>
@@ -68,11 +99,11 @@ async function downloadVideo() {
                     <div class="grid grid-cols-1 gap-3">
                         <a href="${res.data.no_watermark_link}" 
                            download="${fileName}" 
-                           class="flex items-center justify-center gap-3 bg-[#2ecc71] hover:bg-[#27ae60] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-green-500/20 active:scale-95">
+                           class="flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-green-500/20 active:scale-95">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                             </svg>
-                            Download Video (No WM)
+                            Download No Watermark
                         </a>
 
                         <div class="grid grid-cols-2 gap-3">
@@ -89,8 +120,8 @@ async function downloadVideo() {
                         </div>
                     </div>
 
-                    <button onclick="backToHome()" class="w-full mt-4 text-gray-500 hover:text-white text-sm font-medium transition-all py-2 border border-dashed border-white/5 rounded-xl">
-                        Cari Video Lain
+                    <button onclick="backToHome()" class="w-full mt-4 text-gray-500 hover:text-white text-sm font-medium transition-all py-3 border border-dashed border-white/10 rounded-xl hover:bg-white/5">
+                        ← Download Video Lain
                     </button>
                 </div>
             `;
@@ -98,15 +129,15 @@ async function downloadVideo() {
             loading.classList.add('hidden');
             contentDiv.classList.remove('hidden');
         } else {
-            alert("Gagal mendapatkan data. Link tidak valid.");
+            showError("Data tidak ditemukan. Link salah?");
             backToHome();
         }
     } catch (err) {
-        alert("Terjadi kesalahan server.");
+        showError("Yah, server lagi pusing. Coba lagi!");
         backToHome();
     } finally {
         btn.disabled = false;
-        btn.innerText = "Gas Download";
+        btn.innerHTML = `<span>Gas Download</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>`;
     }
 }
 
