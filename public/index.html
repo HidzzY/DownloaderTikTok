@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikDownloader | Simple & Fast</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #121212; color: #e0e0e0; }
+        .glass { background: rgba(25, 25, 25, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="max-w-xl w-full glass p-8 rounded-3xl shadow-2xl">
+        <h1 class="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            TikDownloader
+        </h1>
+        <p class="text-gray-400 text-center mb-8 text-sm">Download TikTok Video No Watermark</p>
+
+        <div class="flex flex-col gap-4">
+            <input type="text" id="urlInput" placeholder="Tempel link TikTok di sini..." 
+                class="w-full p-4 rounded-xl bg-[#191919] border border-gray-700 focus:border-blue-500 focus:outline-none transition-all">
+            
+            <button onclick="downloadVideo()" id="btnDownload"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-xl transition-all active:scale-95">
+                Download Sekarang
+            </button>
+        </div>
+
+        <div id="result" class="hidden mt-8 animate-fade-in">
+            <div id="loading" class="text-center py-4">Proses mengambil data...</div>
+            <div id="content" class="hidden">
+                <img id="cover" class="w-full h-48 object-cover rounded-xl mb-4 shadow-lg">
+                <p id="title" class="text-sm mb-4 line-clamp-2"></p>
+                <a id="dlLink" href="#" target="_blank"
+                    class="block text-center bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-medium">
+                    Simpan Video (Tanpa Watermark)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
