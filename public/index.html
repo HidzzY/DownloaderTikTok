@@ -3,42 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikDownloader | Simple & Fast</title>
+    <title>TikDownloader | Premium TikTok Downloader</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #121212; color: #e0e0e0; }
-        .glass { background: rgba(25, 25, 25, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0f0f; 
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        /* Background Grid Efek Mewah */
+        .bg-grid {
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        /* Glow effect di belakang card */
+        .glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+            z-index: -1;
+            filter: blur(50px);
+        }
+
+        .glass { 
+            background: rgba(20, 20, 20, 0.7); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255,255,255,0.08); 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Efek Gradient pada Button */
+        .btn-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.5);
+        }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="bg-grid flex items-center justify-center min-h-screen p-4 sm:p-8">
 
-    <div class="max-w-xl w-full glass p-8 rounded-3xl shadow-2xl">
-        <h1 class="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            TikDownloader
-        </h1>
-        <p class="text-gray-400 text-center mb-8 text-sm">Download TikTok Video No Watermark</p>
+    <div class="glow top-10 left-10"></div>
+    <div class="glow bottom-10 right-10"></div>
 
-        <div class="flex flex-col gap-4">
-            <input type="text" id="urlInput" placeholder="Tempel link TikTok di sini..." 
-                class="w-full p-4 rounded-xl bg-[#191919] border border-gray-700 focus:border-blue-500 focus:outline-none transition-all">
+    <div class="max-w-2xl w-full glass p-6 sm:p-10 rounded-[2.5rem] relative overflow-hidden">
+        
+        <header class="text-center mb-10">
+            <div class="inline-block p-3 rounded-2xl bg-white/5 mb-4 border border-white/10">
+                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                </svg>
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-3">
+                <span class="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+                    TikDownloader
+                </span>
+            </h1>
+            <p class="text-gray-400 font-medium tracking-wide">
+                Fast, Secure, & No Watermark
+            </p>
+        </header>
+
+        <div class="space-y-4 relative z-10">
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-500 group-focus-within:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                    </svg>
+                </div>
+                <input type="text" id="urlInput" placeholder="Tempel link video TikTok..." 
+                    class="w-full pl-12 pr-4 py-5 rounded-2xl bg-[#161616] border border-white/10 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 focus:outline-none transition-all text-white placeholder-gray-600">
+            </div>
             
             <button onclick="downloadVideo()" id="btnDownload"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-xl transition-all active:scale-95">
-                Download Sekarang
+                class="w-full btn-gradient text-white font-extrabold text-lg py-5 rounded-2xl flex items-center justify-center gap-3">
+                <span>Mulai Download</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
             </button>
         </div>
 
-        <div id="result" class="hidden mt-8 animate-fade-in">
-            <div id="loading" class="text-center py-4">Proses mengambil data...</div>
-            <div id="content" class="hidden">
-                <img id="cover" class="w-full h-48 object-cover rounded-xl mb-4 shadow-lg">
-                <p id="title" class="text-sm mb-4 line-clamp-2"></p>
-                <a id="dlLink" href="#" target="_blank"
-                    class="block text-center bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-medium">
-                    Simpan Video (Tanpa Watermark)
-                </a>
+        <div id="result" class="hidden mt-10 pt-10 border-t border-white/5 animate-fade-in">
+            <div id="loading" class="flex flex-col items-center justify-center py-10">
+                <div class="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4"></div>
+                <p class="text-gray-400 animate-pulse text-sm font-medium">Menganalisis link...</p>
             </div>
+            
+            <div id="content" class="hidden">
+                </div>
         </div>
+
+        <p class="mt-8 text-center text-[10px] text-gray-600 uppercase tracking-[0.2em]">
+            &copy; 2026 TikDownloader &bull; Built for Speed
+        </p>
     </div>
 
     <script src="script.js"></script>
