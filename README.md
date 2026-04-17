@@ -1,7 +1,7 @@
 # 🚀 WsynapTik Downloader
 
 <p align="center">
-  <img src="https://files.catbox.moe/437dlg.jpg" alt="WsynapTik Logo" width="120" style="border-radius: 50%">
+  <img src="https://b.top4top.io/p_3759j17mn1.jpg" alt="WsynapTik Logo" width="120" style="border-radius: 50%">
 </p>
 
 <p align="center">
