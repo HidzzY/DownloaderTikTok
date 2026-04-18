@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Video Tiktok Tanpa Watermark HD - Tiktok Downloader</title>
+    <title>Wsynap - All in One Downloader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -27,6 +27,7 @@
             background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
             z-index: -1;
             filter: blur(50px);
+            transition: background 0.5s ease;
         }
         .glass { 
             background: rgba(20, 20, 20, 0.7); 
@@ -37,6 +38,9 @@
         .btn-gradient {
             background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
             transition: all 0.3s ease;
+        }
+        .btn-gradient-ig {
+            background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
         }
         .btn-gradient:hover {
             transform: translateY(-2px);
@@ -55,40 +59,49 @@
 </head>
 <body class="bg-grid flex items-center justify-center min-h-screen p-4 sm:p-8">
 
-    <div class="glow top-10 left-10"></div>
+    <div id="mainGlow" class="glow top-10 left-10"></div>
     <div class="glow bottom-10 right-10"></div>
 
     <div class="max-w-2xl w-full glass p-6 sm:p-10 rounded-[2.5rem] relative overflow-hidden">
         
+        <div class="flex p-1 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 mb-8 max-w-[320px] mx-auto relative z-20">
+            <button onclick="switchTab('tiktok')" id="tab-tiktok" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg">
+                <i class="fab fa-tiktok mr-2"></i>TikTok
+            </button>
+            <button onclick="switchTab('instagram')" id="tab-instagram" class="flex-1 py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white transition-all">
+                <i class="fab fa-instagram mr-2"></i>Instagram
+            </button>
+        </div>
+
         <div id="inputSection" class="block animate-fade-in">
             <header class="text-center mb-10">
                 <div class="inline-block p-3 rounded-2xl bg-white/5 mb-4 border border-white/10">
-                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
-                    </svg>
+                    <div id="headerIcon">
+                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                        </svg>
+                    </div>
                 </div>
                 <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-3">
-                    <span class="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+                    <span id="brandTitle" class="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
                         WsynapTik
                     </span>
                 </h1>
-                <p class="text-gray-400 font-medium tracking-wide">Fast, Secure, & No Watermark</p>
+                <p id="brandDesc" class="text-gray-400 font-medium tracking-wide">Fast, Secure, & No Watermark</p>
             </header>
 
             <div class="space-y-4 relative z-10">
                 <div class="relative group">
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-gray-500 group-focus-within:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
-                        </svg>
+                        <i id="inputIcon" class="fab fa-tiktok h-5 w-5 text-gray-500 group-focus-within:text-blue-500 transition-colors"></i>
                     </div>
                     <input type="text" id="urlInput" placeholder="tempel tautan video disini" 
                         class="w-full pl-12 pr-4 py-5 rounded-2xl bg-[#161616] border border-white/10 focus:border-blue-500/50 focus:outline-none transition-all text-white placeholder-gray-600">
                 </div>
                 
-                <button onclick="downloadVideo()" id="btnDownload"
+                <button onclick="handleDownload()" id="btnDownload"
                     class="w-full btn-gradient text-white font-extrabold text-lg py-5 rounded-2xl flex items-center justify-center gap-3">
-                    <span>Gas Download</span>
+                    <span id="btnText">Gas Download</span>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                     </svg>
@@ -119,7 +132,7 @@
 
         <footer class="mt-8 pt-6 border-t border-white/5">
             <p id="footerCopyright" class="text-center text-[10px] text-gray-600 uppercase tracking-[0.2em] mb-4">
-                &copy; 2026 WsynapTik &bull; Downloader
+                &copy; 2026 Wsynap &bull; Downloader
             </p>
             
             <div class="social-icons flex gap-6 justify-center">
