@@ -1,3 +1,58 @@
+let currentMode = 'tiktok';
+
+// Fungsi Switch Tab
+function switchTab(mode) {
+    currentMode = mode;
+    const tabTik = document.getElementById('tab-tiktok');
+    const tabIg = document.getElementById('tab-instagram');
+    const brandTitle = document.getElementById('brandTitle');
+    const brandDesc = document.getElementById('brandDesc');
+    const inputIcon = document.getElementById('inputIcon');
+    const urlInput = document.getElementById('urlInput');
+    const btnDownload = document.getElementById('btnDownload');
+    const mainGlow = document.getElementById('mainGlow');
+
+    urlInput.value = ''; // Reset input saat pindah tab
+
+    if (mode === 'instagram') {
+        // Mode Instagram
+        tabIg.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg";
+        tabTik.className = "flex-1 py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white transition-all";
+        
+        brandTitle.innerText = "WsynapGram";
+        brandDesc.innerText = "Download Reels & Photo Instagram";
+        inputIcon.className = "fab fa-instagram h-5 w-5 text-gray-500 group-focus-within:text-purple-500 transition-colors";
+        urlInput.placeholder = "tempel tautan instagram disini";
+        
+        btnDownload.classList.remove('btn-gradient');
+        btnDownload.classList.add('btn-gradient-ig');
+        mainGlow.style.background = "radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%)";
+    } else {
+        // Mode TikTok
+        tabTik.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg";
+        tabIg.className = "flex-1 py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white transition-all";
+        
+        brandTitle.innerText = "WsynapTik";
+        brandDesc.innerText = "Fast, Secure, & No Watermark";
+        inputIcon.className = "fab fa-tiktok h-5 w-5 text-gray-500 group-focus-within:text-blue-500 transition-colors";
+        urlInput.placeholder = "tempel tautan video disini";
+        
+        btnDownload.classList.remove('btn-gradient-ig');
+        btnDownload.classList.add('btn-gradient');
+        mainGlow.style.background = "radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)";
+    }
+}
+
+// Fungsi Penengah (Handler)
+async function handleDownload() {
+    if (currentMode === 'tiktok') {
+        await downloadVideo();
+    } else {
+        await downloadInstagram();
+    }
+}
+
+// Fungsi Error Toast
 function showError(message) {
     const inputWrapper = document.querySelector('.group');
     const urlInput = document.getElementById('urlInput');
@@ -21,6 +76,7 @@ function showError(message) {
     }, 3000);
 }
 
+// Fungsi Download TikTok
 async function downloadVideo() {
     const url = document.getElementById('urlInput').value;
     const inputSection = document.getElementById('inputSection');
@@ -29,14 +85,10 @@ async function downloadVideo() {
     const loading = document.getElementById('loading');
     const btn = document.getElementById('btnDownload');
 
-    if (!url) {
-        showError("tempel dulu tautan nya!");
-        return;
-    }
+    if (!url) { showError("tempel dulu tautan nya!"); return; }
 
     inputSection.classList.add('hidden');
     resultSection.classList.remove('hidden');
-    
     loading.classList.remove('hidden');
     contentDiv.classList.add('hidden');
     contentDiv.innerHTML = '';
@@ -48,7 +100,6 @@ async function downloadVideo() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url })
         });
-
         const res = await response.json();
 
         if (res.status && res.data) {
@@ -60,11 +111,8 @@ async function downloadVideo() {
                     <div class="flex flex-col sm:flex-row gap-5 p-5 bg-[#1e1e1e]/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-2xl">
                         <div class="relative w-full sm:w-40 flex-shrink-0">
                             <img src="${res.data.cover_link}" class="w-full h-56 sm:h-40 object-cover rounded-xl shadow-lg border border-gray-800">
-                            <div class="absolute bottom-2 right-2 bg-blue-600/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-white uppercase tracking-wider">
-                                Priview
-                            </div>
+                            <div class="absolute bottom-2 right-2 bg-blue-600/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-white uppercase tracking-wider">Preview</div>
                         </div>
-
                         <div class="flex flex-col justify-between text-left py-1 overflow-hidden">
                             <div>
                                 <h3 class="text-white font-bold text-lg mb-1 line-clamp-2 leading-snug">${res.data.text || 'TikTok Video'}</h3>
@@ -73,66 +121,77 @@ async function downloadVideo() {
                                     <span class="text-blue-400 font-medium text-sm truncate">@${res.data.author_nickname}</span>
                                 </div>
                             </div>
-                            
                             <div class="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-white/5 text-gray-400">
-                                <div class="text-center">
-                                    <p class="text-[10px] uppercase font-bold text-gray-500">Likes</p>
-                                    <p class="text-sm font-semibold text-white">${res.data.like_count || '0'}</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-[10px] uppercase font-bold text-gray-500">Shares</p>
-                                    <p class="text-sm font-semibold text-white">${res.data.share_count || '0'}</p>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-[10px] uppercase font-bold text-gray-500">Views</p>
-                                    <p class="text-sm font-semibold text-white">${res.data.play_count || '0'}</p>
-                                </div>
+                                <div class="text-center"><p class="text-[10px] uppercase font-bold text-gray-500">Likes</p><p class="text-sm font-semibold text-white">${res.data.like_count || '0'}</p></div>
+                                <div class="text-center"><p class="text-[10px] uppercase font-bold text-gray-500">Shares</p><p class="text-sm font-semibold text-white">${res.data.share_count || '0'}</p></div>
+                                <div class="text-center"><p class="text-[10px] uppercase font-bold text-gray-500">Views</p><p class="text-sm font-semibold text-white">${res.data.play_count || '0'}</p></div>
                             </div>
                         </div>
                     </div>
-
                     <div class="grid grid-cols-1 gap-3">
-                        <a href="${res.data.no_watermark_link}" 
-                           download="${fileName}" 
-                           class="flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-green-500/20 active:scale-95">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                            </svg>
-                            Download No Watermark
-                        </a>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <a href="${res.data.no_watermark_link_hd || res.data.no_watermark_link}" 
-                               download="${fileName}" 
-                               class="flex items-center justify-center gap-2 bg-[#2980b9] hover:bg-[#3498db] text-white font-semibold py-3.5 rounded-xl transition-all active:scale-95">
-                                <span class="text-xs uppercase font-bold tracking-wider">HD Quality</span>
-                            </a>
-                            <a href="${res.data.music_link}" 
-                               download="music_${res.data.itemId}.mp3" 
-                               class="flex items-center justify-center gap-2 bg-[#333] hover:bg-[#444] text-white font-semibold py-3.5 rounded-xl transition-all active:scale-95">
-                                <span class="text-xs uppercase font-bold tracking-wider">Audio MP3</span>
-                            </a>
-                        </div>
+                        <a href="${res.data.no_watermark_link}" download="${fileName}" class="flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95">Download No Watermark</a>
                     </div>
-
-                    <button onclick="backToHome()" class="w-full mt-4 text-gray-500 hover:text-white text-sm font-medium transition-all py-3 border border-dashed border-white/10 rounded-xl hover:bg-white/5">
-                        ← Download Video Lain
-                    </button>
-                </div>
-            `;
-            
+                    <button onclick="backToHome()" class="w-full mt-4 text-gray-500 hover:text-white text-sm py-3 border border-dashed border-white/10 rounded-xl">← Download Lain</button>
+                </div>`;
             loading.classList.add('hidden');
             contentDiv.classList.remove('hidden');
         } else {
-            showError("Data tidak ditemukan. Link salah?");
-            backToHome();
+            showError("Data tidak ditemukan."); backToHome();
         }
     } catch (err) {
-        showError("Yah, server lagi pusing. Coba lagi!");
-        backToHome();
+        showError("Server lagi pusing!"); backToHome();
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<span>Gas Download</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>`;
+    }
+}
+
+// Fungsi Download Instagram
+async function downloadInstagram() {
+    const url = document.getElementById('urlInput').value;
+    const contentDiv = document.getElementById('content');
+    const loading = document.getElementById('loading');
+    const inputSection = document.getElementById('inputSection');
+    const resultSection = document.getElementById('resultSection');
+    const btn = document.getElementById('btnDownload');
+
+    if (!url) { showError("tempel link instagram nya!"); return; }
+
+    inputSection.classList.add('hidden');
+    resultSection.classList.remove('hidden');
+    loading.classList.remove('hidden');
+    contentDiv.classList.add('hidden');
+    btn.disabled = true;
+
+    try {
+        const response = await fetch(`https://ikyyzyyrestapi.my.id/download/instagram?apikey=kyzz&query=${encodeURIComponent(url)}`);
+        const res = await response.json();
+
+        if (res.status && res.result) {
+            const dl = res.result.download_urls[0];
+            contentDiv.innerHTML = `
+                <div class="animate-fade-in space-y-6">
+                    <div class="p-8 bg-[#1e1e1e]/50 backdrop-blur-md rounded-2xl border border-white/5 text-center shadow-2xl">
+                        <div class="w-20 h-20 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-3xl mx-auto flex items-center justify-center mb-6 shadow-lg rotate-3">
+                            <i class="fab fa-instagram text-4xl text-white"></i>
+                        </div>
+                        <h3 class="text-white font-bold text-xl mb-2">Media Berhasil Ditemukan!</h3>
+                        <p class="text-gray-500 text-xs truncate px-4 mb-8 italic">Source: Instagram Media</p>
+                        
+                        <a href="${dl}" target="_blank" class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-5 rounded-2xl transition-all shadow-xl active:scale-95 shadow-purple-500/20">
+                            <i class="fas fa-download"></i> Download Sekarang
+                        </a>
+                    </div>
+                    <button onclick="backToHome()" class="w-full mt-4 text-gray-500 hover:text-white text-sm py-3 border border-dashed border-white/10 rounded-xl">← Download Lainnya</button>
+                </div>`;
+            loading.classList.add('hidden');
+            contentDiv.classList.remove('hidden');
+        } else {
+            showError("Media Instagram tidak ditemukan."); backToHome();
+        }
+    } catch (err) {
+        showError("Gagal akses API Instagram!"); backToHome();
+    } finally {
+        btn.disabled = false;
     }
 }
 
