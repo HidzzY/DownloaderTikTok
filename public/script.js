@@ -41,7 +41,6 @@ function switchTab(mode) {
     }
 }
 
-// Fungsi Penengah (Handler)
 async function handleDownload() {
     if (currentMode === 'tiktok') {
         await downloadVideo();
@@ -50,7 +49,6 @@ async function handleDownload() {
     }
 }
 
-// Fungsi Error Toast
 function showError(message) {
     const inputWrapper = document.querySelector('.group');
     const urlInput = document.getElementById('urlInput');
@@ -74,7 +72,6 @@ function showError(message) {
     }, 3000);
 }
 
-// Fungsi Download TikTok
 async function downloadVideo() {
     const url = document.getElementById('urlInput').value;
     const inputSection = document.getElementById('inputSection');
@@ -143,7 +140,6 @@ async function downloadVideo() {
     }
 }
 
-// Fungsi Download Instagram
 async function downloadInstagram() {
     const url = document.getElementById('urlInput').value;
     const contentDiv = document.getElementById('content');
