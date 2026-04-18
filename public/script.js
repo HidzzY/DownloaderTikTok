@@ -1,6 +1,5 @@
 let currentMode = 'tiktok';
 
-// Fungsi Switch Tab
 function switchTab(mode) {
     currentMode = mode;
     const tabTik = document.getElementById('tab-tiktok');
@@ -12,17 +11,16 @@ function switchTab(mode) {
     const btnDownload = document.getElementById('btnDownload');
     const mainGlow = document.getElementById('mainGlow');
 
-    urlInput.value = ''; // Reset input saat pindah tab
+    urlInput.value = '';
 
     if (mode === 'instagram') {
-        // Mode Instagram
         tabIg.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg";
         tabTik.className = "flex-1 py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white transition-all";
         
         brandTitle.innerText = "WsynapGram";
         brandDesc.innerText = "Download Reels & Photo Instagram";
         inputIcon.className = "fab fa-instagram h-5 w-5 text-gray-500 group-focus-within:text-purple-500 transition-colors";
-        urlInput.placeholder = "tempel tautan instagram disini";
+        urlInput.placeholder = "tempel dulu tautan nya!";
         
         btnDownload.classList.remove('btn-gradient');
         btnDownload.classList.add('btn-gradient-ig');
