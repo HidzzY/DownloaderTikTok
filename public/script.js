@@ -20,7 +20,7 @@ function switchTab(mode) {
         brandTitle.innerText = "WsynapGram";
         brandDesc.innerText = "Download Reels & Photo Instagram";
         inputIcon.className = "fab fa-instagram h-5 w-5 text-gray-500 group-focus-within:text-purple-500 transition-colors";
-        urlInput.placeholder = "tempel dulu tautan nya!";
+        urlInput.placeholder = "tempel tautan video disini!";
         
         btnDownload.classList.remove('btn-gradient');
         btnDownload.classList.add('btn-gradient-ig');
@@ -152,7 +152,7 @@ async function downloadInstagram() {
     const resultSection = document.getElementById('resultSection');
     const btn = document.getElementById('btnDownload');
 
-    if (!url) { showError("tempel link instagram nya!"); return; }
+    if (!url) { showError("tempel dulu tautan nya!"); return; }
 
     inputSection.classList.add('hidden');
     resultSection.classList.remove('hidden');
