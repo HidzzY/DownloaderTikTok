@@ -156,7 +156,6 @@ async function downloadInstagram() {
     btn.disabled = true;
 
     try {
-        // Panggil API server lokal kamu
         const response = await fetch('/api/instagram', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
