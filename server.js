@@ -22,11 +22,26 @@ app.post('/api/download', async (req, res) => {
         const targetUrl = process.env.API_URL || 'https://api.siputzx.my.id/api/d/tiktok/v2';
         const response = await axios.get(`${targetUrl}?url=${encodeURIComponent(url)}`);
         
-        // Mengirimkan seluruh data hasil API ke frontend
         res.json(response.data);
     } catch (error) {
         console.error("Error fetching dari API Siputzx:", error.message);
         res.status(500).json({ status: false, message: "Gagal mengambil data dari server." });
+    }
+});
+
+app.post('/api/instagram', async (req, res) => {
+    const { url } = req.body;
+
+    if (!url) {
+        return res.status(400).json({ status: false, message: "URL Instagram wajib diisi!" });
+    }
+
+    try {
+        const response = await axios.get(`https://ikyyzyyrestapi.my.id/download/instagram?apikey=kyzz&query=${encodeURIComponent(url)}`);
+        res.json(response.data);
+    } catch (error) {
+        console.error("Error fetching dari API Instagram:", error.message);
+        res.status(500).json({ status: false, message: "Gagal akses API Instagram!" });
     }
 });
 
