@@ -26,7 +26,6 @@ function switchTab(mode) {
         btnDownload.classList.add('btn-gradient-ig');
         mainGlow.style.background = "radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%)";
     } else {
-        // Mode TikTok
         tabTik.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg";
         tabIg.className = "flex-1 py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white transition-all";
         
@@ -157,7 +156,12 @@ async function downloadInstagram() {
     btn.disabled = true;
 
     try {
-        const response = await fetch(`https://ikyyzyyrestapi.my.id/download/instagram?apikey=kyzz&query=${encodeURIComponent(url)}`);
+        // Panggil API server lokal kamu
+        const response = await fetch('/api/instagram', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url })
+        });
         const res = await response.json();
 
         if (res.status && res.result) {
@@ -183,7 +187,7 @@ async function downloadInstagram() {
             showError("Media Instagram tidak ditemukan."); backToHome();
         }
     } catch (err) {
-        showError("Gagal akses API Instagram!"); backToHome();
+        showError("Gagal akses server!"); backToHome();
     } finally {
         btn.disabled = false;
     }
