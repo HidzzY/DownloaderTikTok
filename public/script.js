@@ -122,9 +122,23 @@ async function downloadVideo() {
                             </div>
                         </div>
                     </div>
+
                     <div class="grid grid-cols-1 gap-3">
-                        <a href="${res.data.no_watermark_link}" download="${fileName}" class="flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95">Download No Watermark</a>
+                        <a href="${res.data.no_watermark_link}" target="_blank" class="flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95">
+                            <i class="fas fa-video"></i> Download Video
+                        </a>
+
+                        ${res.data.no_watermark_link_hd ? `
+                        <a href="${res.data.no_watermark_link_hd}" target="_blank" class="flex items-center justify-center gap-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95">
+                            <i class="fas fa-bolt"></i> Download Video HD
+                        </a>` : ''}
+
+                        ${res.data.music_link ? `
+                        <a href="${res.data.music_link}" target="_blank" class="flex items-center justify-center gap-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all">
+                            <i class="fas fa-music"></i> Download MP3 Audio
+                        </a>` : ''}
                     </div>
+
                     <button onclick="backToHome()" class="w-full mt-4 text-gray-500 hover:text-white text-sm py-3 border border-dashed border-white/10 rounded-xl">← Download Lain</button>
                 </div>`;
             loading.classList.add('hidden');
